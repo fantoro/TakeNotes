@@ -56,6 +56,7 @@
 #define CHECK_ALARM 		'chal'
 #define SAVE_AS 			'svas'
 #define SAVE				'save'
+#define OPEN				'open'
 #define QUIT_APPL 			'qtpp'
 #define CHOOSE_APPL 		'cspp'
 #define RADIO_CHECKED 		'rdck'
@@ -128,8 +129,13 @@ NoteWindow::NoteWindow(int32 id)
 	AddChild(fNoteView);
 	fNoteView -> AddChild(fScrollView);
 
-	// Creating the file panel
+	// Creating the file panels
+	// Save file panel
 	fSavePanel = new BFilePanel (B_SAVE_PANEL, new BMessenger (this), directory, B_FILE_NODE, false, NULL,
+				refFilter, false, true);
+
+	// Open file panel
+	fOpenPanel = new BFilePanel (B_OPEN_PANEL, new BMessenger (this), directory, B_FILE_NODE, false, NULL,
 				refFilter, false, true);
 
 	Show();
@@ -224,9 +230,15 @@ NoteWindow :: NoteWindow(entry_ref *ref)
 	viewRect = fNoteView->Bounds();
 	ResizeTo(viewRect.Width(), (viewRect.Height() + B_H_SCROLL_BAR_HEIGHT + 5));
 
-	// Creating the file panel
+	// Creating the file panels
+	// Save file panel
 	fSavePanel = new BFilePanel (B_SAVE_PANEL, new BMessenger (this), directory, B_FILE_NODE, false, NULL,
 		refFilter, false, true);
+
+	// Open file panel
+	fOpenPanel = new BFilePanel (B_OPEN_PANEL, new BMessenger (this), directory, B_FILE_NODE, false, NULL,
+		refFilter, false, true);
+
 
 	// Add the view as a child and show the window
 	AddChild(fNoteView);
@@ -308,6 +320,8 @@ void NoteWindow :: InitWindow(){
 	// File menu
 	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Save as" B_UTF8_ELLIPSIS, 	new BMessage(SAVE_AS), 'S', B_SHIFT_KEY));
 	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Save", 	new BMessage(SAVE), 'S'));
+	fFileMenu -> AddSeparatorItem();
+	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Open",		new BMessage(OPEN), 'O'));
 	fFileMenu -> AddSeparatorItem();
 	fFileMenu -> AddItem (fQuitItem = new BMenuItem ("Quit",	new BMessage (QUIT_APPL), 'Q'));
 
@@ -741,6 +755,11 @@ void NoteWindow :: MessageReceived(BMessage* message) {
 
 		}
 		break;
+
+		// Open a note
+		case OPEN: {
+			fOpenPanel -> Show();
+		}
 
 		// Save the note
 		case B_SAVE_REQUESTED: {
