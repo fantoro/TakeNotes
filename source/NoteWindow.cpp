@@ -54,9 +54,9 @@
 #define GO_TO_LINK 			'gtlk'
 #define ABOUT 				'bout'
 #define CHECK_ALARM 		'chal'
-#define SAVE_AS 			'svas'
-#define SAVE				'save'
 #define OPEN				'open'
+#define SAVE				'save'
+#define SAVE_AS 			'svas'
 #define QUIT_APPL 			'qtpp'
 #define CHOOSE_APPL 		'cspp'
 #define RADIO_CHECKED 		'rdck'
@@ -318,10 +318,10 @@ void NoteWindow :: InitWindow(){
 	/*************** Menu Item ***************/
 
 	// File menu
-	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Save as" B_UTF8_ELLIPSIS, 	new BMessage(SAVE_AS), 'S', B_SHIFT_KEY));
-	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Save", 	new BMessage(SAVE), 'S'));
-	fFileMenu -> AddSeparatorItem();
 	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Open",		new BMessage(OPEN), 'O'));
+	fFileMenu -> AddSeparatorItem();
+	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Save", 	new BMessage(SAVE), 'S'));
+	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Save as" B_UTF8_ELLIPSIS, 	new BMessage(SAVE_AS), 'S', B_SHIFT_KEY));
 	fFileMenu -> AddSeparatorItem();
 	fFileMenu -> AddItem (fQuitItem = new BMenuItem ("Quit",	new BMessage (QUIT_APPL), 'Q'));
 
