@@ -735,6 +735,12 @@ void NoteWindow :: MessageReceived(BMessage* message) {
 	// Receiving the messages
 	switch (message -> what) {
 
+		// Open a note
+		case OPEN: {
+			fOpenPanel -> Show();
+			break;
+		}
+
 		// Show the panel that allows to save the note
 		case SAVE_AS: {
 
@@ -756,10 +762,6 @@ void NoteWindow :: MessageReceived(BMessage* message) {
 		}
 		break;
 
-		// Open a note
-		case OPEN: {
-			fOpenPanel -> Show();
-		}
 
 		// Save the note
 		case B_SAVE_REQUESTED: {
