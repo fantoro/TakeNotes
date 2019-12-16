@@ -769,6 +769,12 @@ void NoteWindow :: MessageReceived(BMessage* message) {
 		}
 		break;
 
+		// Open a note
+		case B_REFS_RECEIVED: 
+			note_app->MessageReceived(message);
+		break;
+
+
 		// Close the application
 		case QUIT_APPL: {
 

@@ -336,6 +336,14 @@ void NoteApplication :: MessageReceived(BMessage *message){
 	// Search if the message that was caputed is handled by the application
 	switch(message->what){
 
+		case B_REFS_RECEIVED: {
+			entry_ref ref;
+			if(message -> FindRef("refs", &ref) != B_OK)
+				break;
+			OpenNote(&ref);
+			break;
+		}
+
 		case B_SILENT_RELAUNCH:
 			OpenNote();
 		break;
