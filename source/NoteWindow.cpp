@@ -319,10 +319,10 @@ void NoteWindow :: InitWindow(){
 	/*************** Menu Item ***************/
 
 	// File menu
-	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Open",		new BMessage(OPEN), 'O'));
+	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Open" B_UTF8_ELLIPSIS, new BMessage(OPEN), 'O'));
 	fFileMenu -> AddSeparatorItem();
-	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Save", 	new BMessage(SAVE), 'S'));
-	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Save as" B_UTF8_ELLIPSIS, 	new BMessage(SAVE_AS), 'S', B_SHIFT_KEY));
+	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Save", new BMessage(SAVE), 'S'));
+	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Save as" B_UTF8_ELLIPSIS, new BMessage(SAVE_AS), 'S', B_SHIFT_KEY));
 	fFileMenu -> AddSeparatorItem();
 	fFileMenu -> AddItem (fQuitItem = new BMenuItem ("Quit",	new BMessage (QUIT_APPL), 'Q'));
 
