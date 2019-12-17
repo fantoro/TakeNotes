@@ -17,6 +17,7 @@
 #include "NoteApplication.h"
 #include "NoteWindow.h"
 #include "ColorMenuItem.h"
+#include "NoteRefFilter.h"
 
 // Other Libraries
 #include <Alert.h>
@@ -84,7 +85,7 @@ NoteWindow::NoteWindow(int32 id)
 	BRect		frameView,
 				frameText;
 	entry_ref	*directory = NULL;
-	BRefFilter	*refFilter = NULL;
+	BRefFilter	*refFilter = new NoteRefFilter;
 	BString 	title("Untitled Note ");
 
 	// Initialize the messenger: the handler is the window itself
