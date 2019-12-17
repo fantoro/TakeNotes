@@ -39,7 +39,7 @@ AppHashTable.cpp \
 ChoiceView.cpp ChoiceWindow.cpp \
 ColorMenuItem.cpp ColorView.cpp ColorWindow.cpp \
 NoteApplication.cpp NoteText.cpp NoteView.cpp NoteWindow.cpp \
-TagsWindow.cpp 
+TagsWindow.cpp NoteRefFilter.cpp
 
 #	specify the resource definition files to use
 #	full path or a relative path to the resource file can be used.
