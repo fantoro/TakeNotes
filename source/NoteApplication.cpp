@@ -337,9 +337,15 @@ void NoteApplication :: MessageReceived(BMessage *message){
 	switch(message->what){
 
 		case B_REFS_RECEIVED: {
-			entry_ref ref;
-			if(message -> FindRef("refs", &ref) != B_OK)
+			entry_ref pRef;
+			if(message -> FindRef("refs", &pRef) != B_OK)
 				break;
+
+			BEntry entry(&pRef, true);
+			entry_ref ref;
+			if(entry.GetRef(&ref) != B_OK)
+				break;
+
 			OpenNote(&ref);
 			break;
 		}
