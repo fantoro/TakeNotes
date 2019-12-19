@@ -6,6 +6,8 @@
 #include <Entry.h>
 #include <Node.h>
 #include <NodeInfo.h>
+#include <stdio.h>
+#include <MimeType.h>
 
 // Constructor
 NoteRefFilter :: NoteRefFilter() {
@@ -19,26 +21,26 @@ bool NoteRefFilter :: Filter(const entry_ref *ref,
 
 	// Follow links
 	BEntry entry(ref,true);
+	if(entry.InitCheck() != B_OK)
+		return false;
 
 	// Return true if the file is a directory
 	if (entry.IsDirectory())
 		return true;
 
 	// Create a BNode and a BNodeInfo to get the MIME type
-	BNode n(&entry);
-	BNodeInfo ninfo(&n);
+	entry_ref fRef;
+	if(entry.GetRef(&fRef) != B_OK)
+		return false;
 
-	// Create a string to hold the MIME type
-	BString m;
+	// Create a BMimeType object to hold the MIME type
+	BMimeType m;
 
-	// Lock the buffer's string to use with BNodeInfo::GetType
-	char *mbuf = m.LockBuffer(B_MIME_TYPE_LENGTH);
+	// Guess the MIME type and store it in m
+	if(BMimeType::GuessMimeType(&fRef, &m))
+		return false;
 
-	// Get MIME type
-	ninfo.GetType(mbuf);
-
-	// Unlock the string's buffer for use 
-	m.UnlockBuffer();
+	printf("%s\n", m.Type());
 
 	// Return true if the MIME type matches
 	if (m == "application/takenotes")
