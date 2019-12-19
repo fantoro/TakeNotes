@@ -4,9 +4,6 @@
 // System libraries
 #include <String.h>
 #include <Entry.h>
-#include <Node.h>
-#include <NodeInfo.h>
-#include <stdio.h>
 #include <MimeType.h>
 
 // Constructor
@@ -28,7 +25,7 @@ bool NoteRefFilter :: Filter(const entry_ref *ref,
 	if (entry.IsDirectory())
 		return true;
 
-	// Create a BNode and a BNodeInfo to get the MIME type
+	// Get an entry_ref from entry
 	entry_ref fRef;
 	if(entry.GetRef(&fRef) != B_OK)
 		return false;
@@ -39,8 +36,6 @@ bool NoteRefFilter :: Filter(const entry_ref *ref,
 	// Guess the MIME type and store it in m
 	if(BMimeType::GuessMimeType(&fRef, &m))
 		return false;
-
-	printf("%s\n", m.Type());
 
 	// Return true if the MIME type matches
 	if (m == "application/takenotes")
