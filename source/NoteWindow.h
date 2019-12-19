@@ -87,6 +87,7 @@ class NoteWindow : public BWindow {
 		BScrollView		*fScrollView;
 
 		// Menu Items: file menu
+		BMenuItem	*fOpenItem;
 		BMenuItem	*fSaveItem;
 		BMenuItem	*fQuitItem;
 

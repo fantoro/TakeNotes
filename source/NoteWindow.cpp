@@ -17,7 +17,6 @@
 #include "NoteApplication.h"
 #include "NoteWindow.h"
 #include "ColorMenuItem.h"
-#include "NoteRefFilter.h"
 
 // Other Libraries
 #include <Alert.h>
@@ -85,7 +84,7 @@ NoteWindow::NoteWindow(int32 id)
 	BRect		frameView,
 				frameText;
 	entry_ref	*directory = NULL;
-	BRefFilter	*refFilter = new NoteRefFilter;
+	BRefFilter	*refFilter = NULL;
 	BString 	title("Untitled Note ");
 
 	// Initialize the messenger: the handler is the window itself
@@ -130,13 +129,8 @@ NoteWindow::NoteWindow(int32 id)
 	AddChild(fNoteView);
 	fNoteView -> AddChild(fScrollView);
 
-	// Creating the file panels
-	// Save file panel
+	// Creating the file panel
 	fSavePanel = new BFilePanel (B_SAVE_PANEL, new BMessenger (this), directory, B_FILE_NODE, false, NULL,
-				refFilter, false, true);
-
-	// Open file panel
-	fOpenPanel = new BFilePanel (B_OPEN_PANEL, new BMessenger (this), directory, B_FILE_NODE, false, NULL,
 				refFilter, false, true);
 
 	Show();
@@ -231,15 +225,9 @@ NoteWindow :: NoteWindow(entry_ref *ref)
 	viewRect = fNoteView->Bounds();
 	ResizeTo(viewRect.Width(), (viewRect.Height() + B_H_SCROLL_BAR_HEIGHT + 5));
 
-	// Creating the file panels
-	// Save file panel
+	// Creating the file panel
 	fSavePanel = new BFilePanel (B_SAVE_PANEL, new BMessenger (this), directory, B_FILE_NODE, false, NULL,
 		refFilter, false, true);
-
-	// Open file panel
-	fOpenPanel = new BFilePanel (B_OPEN_PANEL, new BMessenger (this), directory, B_FILE_NODE, false, NULL,
-		refFilter, false, true);
-
 
 	// Add the view as a child and show the window
 	AddChild(fNoteView);
@@ -319,7 +307,9 @@ void NoteWindow :: InitWindow(){
 	/*************** Menu Item ***************/
 
 	// File menu
-	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Open" B_UTF8_ELLIPSIS, new BMessage(OPEN), 'O'));
+	fFileMenu -> AddItem (fOpenItem = new BMenuItem("Open" B_UTF8_ELLIPSIS, new BMessage(OPEN), 'O'));
+	fOpenItem -> Message() -> AddPointer("target", (void*)this);
+	fOpenItem -> SetTarget(*(new BMessenger(note_app)));
 	fFileMenu -> AddSeparatorItem();
 	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Save", new BMessage(SAVE), 'S'));
 	fFileMenu -> AddItem (fSaveItem = new BMenuItem("Save as" B_UTF8_ELLIPSIS, new BMessage(SAVE_AS), 'S', B_SHIFT_KEY));
@@ -736,12 +726,6 @@ void NoteWindow :: MessageReceived(BMessage* message) {
 	// Receiving the messages
 	switch (message -> what) {
 
-		// Open a note
-		case OPEN: {
-			fOpenPanel -> Show();
-			break;
-		}
-
 		// Show the panel that allows to save the note
 		case SAVE_AS: {
 
@@ -772,19 +756,19 @@ void NoteWindow :: MessageReceived(BMessage* message) {
 		}
 		break;
 
-		// Open a note
+		// Open the note
 		case B_REFS_RECEIVED: {
 			entry_ref pRef;
 			if(message -> FindRef("refs", &pRef) != B_OK)
 				break;
-
+			
 			BEntry entry(&pRef, true);
 			if(entry.InitCheck() != B_OK)
 				break;
 			entry_ref ref;
 			if(entry.GetRef(&ref) != B_OK)
 				break;
-
+			
 			note_app->OpenNote(&ref);
 		}
 		break;
