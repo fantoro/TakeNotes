@@ -773,20 +773,8 @@ void NoteWindow :: MessageReceived(BMessage* message) {
 		break;
 
 		// Open a note
-		case B_REFS_RECEIVED: {
-			entry_ref pRef;
-			if(message -> FindRef("refs", &pRef) != B_OK)
-				break;
-
-			BEntry entry(&pRef, true);
-			if(entry.InitCheck() != B_OK)
-				break;
-			entry_ref ref;
-			if(entry.GetRef(&ref) != B_OK)
-				break;
-
-			note_app->OpenNote(&ref);
-		}
+		case B_REFS_RECEIVED: 
+			note_app->MessageReceived(message);
 		break;
 
 
