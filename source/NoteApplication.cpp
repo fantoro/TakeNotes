@@ -342,6 +342,8 @@ void NoteApplication :: MessageReceived(BMessage *message){
 				break;
 
 			BEntry entry(&pRef, true);
+			if(entry.InitCheck() != B_OK)
+				break;
 			entry_ref ref;
 			if(entry.GetRef(&ref) != B_OK)
 				break;

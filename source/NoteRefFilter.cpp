@@ -19,6 +19,8 @@ bool NoteRefFilter :: Filter(const entry_ref *ref,
 
 	// Follow links
 	BEntry entry(ref,true);
+	if (entry.InitCheck() != B_OK)
+		return false;
 
 	// Return true if the file is a directory
 	if (entry.IsDirectory())
