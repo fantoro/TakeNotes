@@ -21,7 +21,6 @@
 #include <Application.h>
 #include <String.h>
 #include <image.h>
-#include <FilePanel.h>
 
 
 // Definition of the class
@@ -30,7 +29,6 @@ class NoteApplication : public BApplication {
 	public:
 
 							NoteApplication();
-							~NoteApplication();
 		virtual void		ArgvReceived(int32 argc, char** argv);
 		virtual void		RefsReceived(BMessage *message);
 		virtual void		MessageReceived(BMessage *message);
@@ -47,8 +45,6 @@ class NoteApplication : public BApplication {
 
 		int32		fWindowCount;
 		int32		fWindowCountUntitled;
-		BFilePanel	*fOpenPanel;
-		BMessenger	*fOpenPanelMessenger;
 
 };
 

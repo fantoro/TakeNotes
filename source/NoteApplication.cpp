@@ -15,7 +15,6 @@
 
 // Our Libraries
 #include "NoteApplication.h"
-#include "NoteRefFilter.h"
 
 // Libraries
 #include <Alert.h>
@@ -43,7 +42,6 @@
 // Constants
 #define COLOR_CHANGED 	'ccrq'
 #define FONT_BOLD 		'fntb'
-#define OPEN			'open'
 
 // Global variables
 NoteApplication *note_app;
@@ -92,14 +90,6 @@ NoteApplication :: NoteApplication()
 	fWindowCount = 0;
 	fWindowCountUntitled = 0;
 	note_app = this;
-	fOpenPanel = new BFilePanel(B_OPEN_PANEL, NULL, NULL, B_FILE_NODE, false, NULL, new NoteRefFilter, false, true);
-}
-
-// Destructor
-NoteApplication :: ~NoteApplication() {
-	delete fOpenPanel;
-	if(fOpenPanelMessenger)
-		delete fOpenPanelMessenger;
 }
 
 // Function ReadyToRun
@@ -345,19 +335,6 @@ void NoteApplication :: MessageReceived(BMessage *message){
 
 	// Search if the message that was caputed is handled by the application
 	switch(message->what){
-		case OPEN: {
-			BWindow *w;
-			if(message->FindPointer("target", (void**)&w) != B_OK)
-				break;
-			if(fOpenPanelMessenger)
-				delete fOpenPanelMessenger;
-			fOpenPanelMessenger = new BMessenger(w);
-			fOpenPanel->SetTarget(*fOpenPanelMessenger);
-			fOpenPanel->Show();
-			message->PrintToStream();
-		}
-		break;
-
 		case B_SILENT_RELAUNCH:
 			OpenNote();
 		break;
