@@ -34,7 +34,7 @@ bool NoteRefFilter :: Filter(const entry_ref *ref,
 	BMimeType m;
 
 	// Guess the MIME type and store it in m
-	if(BMimeType::GuessMimeType(&fRef, &m) != B_OK)
+	if(BMimeType::GuessMimeType(&fRef, &m))
 		return false;
 
 	// Return true if the MIME type matches
