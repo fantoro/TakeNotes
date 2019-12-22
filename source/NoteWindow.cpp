@@ -101,7 +101,7 @@ NoteWindow::NoteWindow(int32 id)
 		false);
 
 	// Open file panel
-	fOpenPanel = new BFilePanel (B_OPEN_PANEL, new BMessenger (this), directory, B_FILE_NODE, false, NULL,
+	fOpenPanel = new BFilePanel (B_OPEN_PANEL, new BMessenger (this), NULL, B_FILE_NODE, false, NULL,
 				new NoteRefFilter, false, true);
 
 	Show();
@@ -203,7 +203,7 @@ NoteWindow :: NoteWindow(entry_ref *ref)
 		false);
 
 	// Open file panel
-	fOpenPanel = new BFilePanel (B_OPEN_PANEL, new BMessenger (this), directory, B_FILE_NODE, false, NULL,
+	fOpenPanel = new BFilePanel (B_OPEN_PANEL, new BMessenger (this), NULL, B_FILE_NODE, false, NULL,
 		new NoteRefFilter, false, true);
 
 
