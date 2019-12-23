@@ -30,7 +30,9 @@ bool NoteRefFilter :: Filter(const entry_ref *ref,
 	BNode n(&entry);
 	if (n.InitCheck() != B_OK) 
 		return false;
-	BNodeInfo ninfo(&n);
+	BNodeInfo nodeInfo(&n);
+	if (nodeInfo.InitCheck() != B_OK)
+		return false;
 
 	// Create a string to hold the MIME type
 	BString m;
@@ -39,7 +41,7 @@ bool NoteRefFilter :: Filter(const entry_ref *ref,
 	char *mbuf = m.LockBuffer(B_MIME_TYPE_LENGTH);
 
 	// Get MIME type
-	ninfo.GetType(mbuf);
+	nodeInfo.GetType(mbuf);
 
 	// Unlock the string's buffer for use 
 	m.UnlockBuffer();
