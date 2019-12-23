@@ -28,6 +28,8 @@ bool NoteRefFilter :: Filter(const entry_ref *ref,
 
 	// Create a BNode and a BNodeInfo to get the MIME type
 	BNode n(&entry);
+	if (n.InitCheck() != B_OK) 
+		return false;
 	BNodeInfo ninfo(&n);
 
 	// Create a string to hold the MIME type
