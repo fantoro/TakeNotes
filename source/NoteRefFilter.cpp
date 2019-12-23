@@ -12,9 +12,9 @@ NoteRefFilter :: NoteRefFilter() {
 
 // Filter hook method
 bool NoteRefFilter :: Filter(const entry_ref *ref,
-			BNode *node,
+			BNode *_node,
 			struct stat_beos *stat,
-			const char *mimeType) {
+			const char *_mimeType) {
 
 	// Follow links
 	BEntry entry(ref,true);
@@ -26,22 +26,22 @@ bool NoteRefFilter :: Filter(const entry_ref *ref,
 		return true;
 
 	// Create a BNode and a BNodeInfo to get the MIME type
-	BNode n(&entry);
-	if (n.InitCheck() != B_OK) 
+	BNode node(&entry);
+	if (node.InitCheck() != B_OK) 
 		return false;
-	BNodeInfo nodeInfo(&n);
+	BNodeInfo nodeInfo(&node);
 	if (nodeInfo.InitCheck() != B_OK)
 		return false;
 
 	// Create a string to hold the MIME type
-	char m[B_MIME_TYPE_LENGTH];
+	char mimeType[B_MIME_TYPE_LENGTH];
 
 	// Get MIME type
-	if (nodeInfo.GetType(m) != B_OK)
+	if (nodeInfo.GetType(mimeType) != B_OK)
 		return false;
 
 	// Return true if the MIME type matches
-	if (strcmp(m, "application/takenotes") == 0)
+	if (strcmp(mimeType, "application/takenotes") == 0)
 		return true;
 
 	// Filter the file out if it doesn't match any of the above
