@@ -2,7 +2,6 @@
 #include "NoteRefFilter.h"
 
 // System libraries
-#include <String.h>
 #include <Entry.h>
 #include <Node.h>
 #include <NodeInfo.h>
@@ -35,19 +34,14 @@ bool NoteRefFilter :: Filter(const entry_ref *ref,
 		return false;
 
 	// Create a string to hold the MIME type
-	BString m;
-
-	// Lock the buffer's string to use with BNodeInfo::GetType
-	char *mbuf = m.LockBuffer(B_MIME_TYPE_LENGTH);
+	char m[B_MIME_TYPE_LENGTH];
 
 	// Get MIME type
-	nodeInfo.GetType(mbuf);
-
-	// Unlock the string's buffer for use 
-	m.UnlockBuffer();
+	if (nodeInfo.GetType(m) != B_OK)
+		return false;
 
 	// Return true if the MIME type matches
-	if (m == "application/takenotes")
+	if (strcmp(m, "application/takenotes") == 0)
 		return true;
 
 	// Filter the file out if it doesn't match any of the above
